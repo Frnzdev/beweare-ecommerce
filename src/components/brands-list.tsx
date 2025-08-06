@@ -6,6 +6,9 @@ const BrandList = () => {
     { src: "/Vector-1.svg", alt: "Adidas" },
     { src: "/Vector-2.svg", alt: "Puma" },
     { src: "/Vector-3.svg", alt: "New Balance" },
+    { src: "/converse.svg", alt: "Converse" },
+    { src: "/ralph.svg", alt: "Polo " },
+    { src: "/zara.svg", alt: "Zara" },
   ];
 
   return (
