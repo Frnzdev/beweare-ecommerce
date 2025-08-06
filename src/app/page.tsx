@@ -40,11 +40,11 @@ const Home = async () => {
           />
         </div>
 
-        <div className="px-5">
-          <ProductList title="Marcas parceiras" />
-        </div>
+        <ProductList title="Marcas parceiras" />
 
         <BrandList />
+
+        <ProductList products={products} title="Mais vendidos" />
 
         <div className="px-5">
           <CategorySelector categories={category} />
@@ -53,7 +53,7 @@ const Home = async () => {
         <div className="px-5">
           <Image
             src="/banner-02.png"
-            alt="Leve uma vida com estilo"
+            alt="Seja autentico"
             width={0}
             height={0}
             sizes="100vw"
