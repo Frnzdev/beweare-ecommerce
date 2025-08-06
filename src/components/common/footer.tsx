@@ -8,7 +8,7 @@ const Footer = () => {
         alt="BEWEAR"
         width={100}
         height={26.14}
-        className="pb-3"
+        className="pb-3s"
       />
       <p className="text-xs font-medium">© 2025 Copyright BEWEAR</p>
       <p className="text-muted-foreground text-xs font-medium">
