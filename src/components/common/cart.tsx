@@ -57,7 +57,7 @@ const Cart = () => {
             </ScrollArea>
           </div>
 
-          {cart?.cart?.items.length > 0 && (
+          {(cart?.cart?.items?.length ?? 0) > 0 && (
             <div className="mt-4 flex flex-col gap-4">
               <Separator />
               <div className="flex items-center justify-between text-xs font-medium">
