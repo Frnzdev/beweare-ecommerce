@@ -15,6 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import Cart from "./cart";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
@@ -25,7 +26,7 @@ const Header = () => {
         <Image src="/Logo.svg" alt="BEWEAR" width={100} height={26.14} />
       </Link>
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <Sheet>
           <SheetTrigger asChild>
             {/*o as child server para nao ter um button dentro de um button, ele toma tudo que o button seria */}
@@ -82,6 +83,7 @@ const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
+        <Cart />
       </div>
     </header>
   );
