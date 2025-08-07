@@ -1,10 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { ShoppingBasketIcon } from "lucide-react";
 
-import { getCart } from "@/actions/get-cart";
 import { formatCentsToBRL } from "@/helpers/money";
+import { useCart } from "@/hooks/queries/use-cart";
 
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
@@ -19,10 +18,7 @@ import {
 import CartItem from "./cart-item";
 
 const Cart = () => {
-  const { data: cart } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => getCart(),
-  });
+  const { data: cart } = useCart();
 
   return (
     <Sheet>
@@ -45,6 +41,7 @@ const Cart = () => {
                     key={item.id}
                     id={item.id}
                     productName={item.productVariant.product.name}
+                    productVariantId={item.productVariantId}
                     productVariantName={item.productVariant.name}
                     productVariantImageUrl={item.productVariant.imageUrl}
                     productVariantPriceInCents={

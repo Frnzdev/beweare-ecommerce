@@ -1,17 +1,18 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 
-import { DecreaseCartProductQuantity } from "@/actions/decrease-cart-product-quantity";
-import { removeProductFromCart } from "@/actions/remove-cart-product";
 import { formatCentsToBRL } from "@/helpers/money";
+import { useDecreaseCartProduct } from "@/hooks/mutations/use-decrease-cart-product";
+import { UseIncreaseCartProduct } from "@/hooks/mutations/use-increase-cart-product";
+import { useRemoveProductFromCart } from "@/hooks/mutations/use-remove-product-from-cart";
 
 import { Button } from "../ui/button";
 
 interface CartItemProps {
   id: string;
   productName: string;
+  productVariantId: string;
   productVariantName: string;
   productVariantImageUrl: string;
   productVariantPriceInCents: number;
@@ -21,28 +22,18 @@ interface CartItemProps {
 const CartItem = ({
   id,
   productName,
+  productVariantId,
   productVariantName,
   productVariantImageUrl,
   productVariantPriceInCents,
   quantity,
 }: CartItemProps) => {
-  const queryClient = useQueryClient();
-  const removeProductFromCartMutation = useMutation({
-    mutationKey: ["remove-cart-product"],
-    mutationFn: () => removeProductFromCart({ cartItemId: id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-
-  const decreaseCartProductQuantityMutation = useMutation({
-    mutationKey: ["decrease-cart-product-quantity"],
-    mutationFn: () => DecreaseCartProductQuantity({ cartItemId: id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-
+  //
+  const removeProductFromCartMutation = useRemoveProductFromCart(id);
+  const decreaseCartProductQuantityMutation = useDecreaseCartProduct(id);
+  const increaseCartProductIncreaseMutation =
+    UseIncreaseCartProduct(productVariantId);
+  //
   const handleDeleteClick = () => {
     removeProductFromCartMutation.mutate(undefined, {
       onSuccess: () => {
@@ -54,10 +45,18 @@ const CartItem = ({
     });
   };
 
-  const handleDecreaseClick = () => {
+  const handleDecreaseQuantityClick = () => {
     decreaseCartProductQuantityMutation.mutate(undefined, {
       onSuccess: () => {
         toast.success("Quantidade do produto diminuída");
+      },
+    });
+  };
+
+  const handleIncreaseQuantityClick = () => {
+    increaseCartProductIncreaseMutation.mutate(undefined, {
+      onSuccess: () => {
+        toast.success("Quantidade do produto aumentada");
       },
     });
   };
@@ -79,7 +78,7 @@ const CartItem = ({
           </p>
           <div className="flex w-[100px] items-center justify-between rounded-lg border p-1">
             <Button
-              onClick={handleDecreaseClick}
+              onClick={handleDecreaseQuantityClick}
               size="icon"
               className="h-5 w-5 p-0"
               variant="ghost"
@@ -88,7 +87,7 @@ const CartItem = ({
             </Button>
             <p className="text-xs font-medium">{quantity}</p>
             <Button
-              onClick={() => {}}
+              onClick={handleIncreaseQuantityClick}
               size="icon"
               className="h-5 w-5 p-0"
               variant="ghost"
