@@ -4,10 +4,12 @@ import { getCart } from "@/actions/get-cart";
 
 export const getUseCartQueryKey = () => ["cart"] as const;
 
-// ✅ Hook corrigido
-export const useCart = () => {
+export const useCart = (params?: {
+  initialData?: Awaited<ReturnType<typeof getCart>>;
+}) => {
   return useQuery({
-    queryKey: getUseCartQueryKey(), // aqui estava o erro: estava usando a função sem chamar
+    queryKey: getUseCartQueryKey(),
     queryFn: () => getCart(),
+    initialData: params?.initialData,
   });
 };

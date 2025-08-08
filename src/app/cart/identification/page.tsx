@@ -8,6 +8,7 @@ import { db } from "@/db";
 import { shippingAddressTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
+import CartSummary from "../components/cart-summary";
 import Addresses from "./components/addresses";
 
 const IdentificationPage = async () => {
@@ -42,6 +43,7 @@ const IdentificationPage = async () => {
     (acc, item) => acc + item.productVariant.priceInCents * item.quantity,
     0,
   );
+
   return (
     <div>
       <Header />
@@ -49,6 +51,18 @@ const IdentificationPage = async () => {
         <Addresses
           shippingAddresses={shippingAddresses}
           defaultShippingAddressId={cart.shippingAddress?.id || null}
+        />
+        <CartSummary
+          totalInCents={cartTotalInCents}
+          subTotalInCents={cartTotalInCents}
+          products={cart.items.map((item) => ({
+            id: item.productVariantId,
+            name: item.productVariant.name,
+            variantName: item.productVariant.name,
+            quantity: item.quantity,
+            priceInCents: item.productVariant.priceInCents,
+            imageUrl: item.productVariant.imageUrl,
+          }))}
         />
       </div>
       <div className="mt-12">
