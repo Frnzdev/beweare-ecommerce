@@ -8,7 +8,6 @@ import { PatternFormat } from "react-number-format";
 import { toast } from "sonner";
 import * as z from "zod";
 
-import { formatAddress } from "@/app/helpers/address";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -26,6 +25,8 @@ import { shippingAddressTable } from "@/db/schema";
 import { useCreateShippingAddress } from "@/hooks/mutations/use-create-shipping-address";
 import { useUpdateCartShippingAddress } from "@/hooks/mutations/use-update-cart-shipping-address";
 import { useUserAddresses } from "@/hooks/queries/use-user-addresses";
+
+import { formatAddress } from "../../helpers/address";
 
 const formSchema = z.object({
   email: z.email("E-mail inválido"),
