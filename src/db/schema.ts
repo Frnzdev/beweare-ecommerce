@@ -8,7 +8,6 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
-import { id } from "zod/v4/locales";
 
 export const userTable = pgTable("user", {
   id: text("id").primaryKey(),
@@ -94,7 +93,7 @@ export const productTable = pgTable("product", {
   id: uuid().primaryKey().defaultRandom(),
   categoryId: uuid("category_id")
     .notNull()
-    .references(() => categoryTable.id, { onDelete: "set null" }), // chave estrangeira
+    .references(() => categoryTable.id, { onDelete: "set null" }),
   name: text().notNull(),
   slug: text().notNull().unique(),
   description: text().notNull(),
@@ -158,7 +157,7 @@ export const shippingAddressRelations = relations(
   shippingAddressTable,
   ({ one, many }) => ({
     user: one(userTable, {
-      fields: [shippingAddressTable.id],
+      fields: [shippingAddressTable.userId],
       references: [userTable.id],
     }),
     cart: one(cartTable, {
@@ -216,7 +215,7 @@ export const cartItemRelations = relations(cartItemTable, ({ one }) => ({
   }),
 }));
 
-export const orderStatus = pgEnum("order_stauts", [
+export const orderStatus = pgEnum("order_status", [
   "pending",
   "paid",
   "canceled",
@@ -242,8 +241,8 @@ export const orderTable = pgTable("order", {
   phone: text().notNull(),
   email: text().notNull(),
   cpfOrCnpj: text().notNull(),
-  totalPriceInCents: integer("total_price_in_cents"),
-  stauts: orderStatus().notNull().default("pending"),
+  totalPriceInCents: integer("total_price_in_cents").notNull(),
+  status: orderStatus().notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
@@ -272,9 +271,9 @@ export const orderItemTable = pgTable("order_item", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const oderItemRelations = relations(orderItemTable, ({ one }) => ({
+export const orderItemRelations = relations(orderItemTable, ({ one }) => ({
   order: one(orderTable, {
-    fields: [orderItemTable.productVariantId],
+    fields: [orderItemTable.orderId],
     references: [orderTable.id],
   }),
   productVariant: one(productVariantTable, {

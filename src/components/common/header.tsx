@@ -1,6 +1,6 @@
 "use client";
 
-import { LogInIcon, LogOutIcon, MenuIcon } from "lucide-react";
+import { Home, LogInIcon, LogOutIcon, MenuIcon, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,6 +8,7 @@ import { authClient } from "@/lib/auth-client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -16,6 +17,7 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import Cart from "./cart";
+import SectionSelector from "./sections-selector";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
@@ -59,13 +61,51 @@ const Header = () => {
                         </span>
                       </div>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => authClient.signOut()}
-                    >
-                      <LogOutIcon />
-                    </Button>
+                  </div>
+                  <div className="flex flex-col py-7">
+                    <Separator />
+
+                    <div className="py-5">
+                      <SectionSelector page={`/`}>
+                        <Home /> Início
+                      </SectionSelector>
+                      <SectionSelector page={`/my-orders`}>
+                        <Truck /> Meus pedidos
+                      </SectionSelector>
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <Separator />
+
+                    <div className="py-5">
+                      <SectionSelector page={`/category/camisetas`}>
+                        Camisetas
+                      </SectionSelector>
+                      <SectionSelector page={`/category/bermuda-shorts`}>
+                        Bermuda & Shorts
+                      </SectionSelector>
+                      <SectionSelector page={`/category/calas`}>
+                        Calças
+                      </SectionSelector>
+                      <SectionSelector page={`/category/jaquetas-moletons`}>
+                        Jaquetas & Moletons
+                      </SectionSelector>
+                      <SectionSelector page={`/category/tnis`}>
+                        Tênis
+                      </SectionSelector>
+                      <SectionSelector page={`/category/acessrios`}>
+                        Acessórios
+                      </SectionSelector>
+                    </div>
+                    <div className="py-5">
+                      <Button
+                        className="w-full"
+                        variant="outline"
+                        onClick={() => authClient.signOut()}
+                      >
+                        <LogOutIcon /> Sair da conta
+                      </Button>
+                    </div>
                   </div>
                 </>
               ) : (

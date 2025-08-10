@@ -12,8 +12,7 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-const CheckoutSuccesPage = () => {
+const CancelPage = () => {
   return (
     <>
       <Header />
@@ -21,21 +20,17 @@ const CheckoutSuccesPage = () => {
       <Dialog open={true} onOpenChange={() => {}}>
         <DialogContent className="text-center">
           <Image
-            src="/illustration.svg"
+            src="/illustrationError.svg"
             width={300}
             height={300}
             alt="sucess"
             className="mx-auto"
           />
-          <DialogTitle className="mt-4 text-2xl">Pedido efetuado!</DialogTitle>
+          <DialogTitle className="mt-4 text-2xl">Pedido cancelado</DialogTitle>
           <DialogDescription className="font-medium">
-            Seu pedido foi efetuado com sucesso. Você pode acompanhar o status
-            na seção de “Meus Pedidos”.
+            Seu pedido foi cancelado. Você pode fazer um novo pedido se quiser!
           </DialogDescription>
           <DialogFooter>
-            <Button className="rounded-full" size={"lg"} asChild>
-              <Link href={"/my-orders"}>Ver meus pedidos</Link>
-            </Button>
             <Button
               asChild
               className="rounded-full"
@@ -51,4 +46,4 @@ const CheckoutSuccesPage = () => {
   );
 };
 
-export default CheckoutSuccesPage;
+export default CancelPage;

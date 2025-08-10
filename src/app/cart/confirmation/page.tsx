@@ -72,14 +72,14 @@ const ConfirmationPage = async () => {
 
             {/* Botão centralizado */}
             <div className="flex justify-center">
-              <FinishOrderButton />
+              <FinishOrderButton>Finalizar compra</FinishOrderButton>
             </div>
           </CardContent>
         </Card>
 
         <CartSummary
           totalInCents={cartTotalInCents}
-          subTotalInCents={cartTotalInCents}
+          subtotalInCents={cartTotalInCents}
           products={cart.items.map((item) => ({
             id: item.productVariantId,
             name: item.productVariant.name,

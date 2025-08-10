@@ -34,7 +34,7 @@ export const POST = async (request: Request) => {
     await db
       .update(orderTable)
       .set({
-        state: "paid",
+        status: "paid",
       })
       .where(eq(orderTable.id, orderId));
   }
