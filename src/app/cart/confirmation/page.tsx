@@ -72,7 +72,7 @@ const ConfirmationPage = async () => {
 
             {/* Botão centralizado */}
             <div className="flex justify-center">
-              <FinishOrderButton>Finalizar compra</FinishOrderButton>
+              <FinishOrderButton />
             </div>
           </CardContent>
         </Card>
