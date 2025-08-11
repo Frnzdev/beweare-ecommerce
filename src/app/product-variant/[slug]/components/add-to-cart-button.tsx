@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
 import { addProductToCart } from "@/actions/add-cart-product";

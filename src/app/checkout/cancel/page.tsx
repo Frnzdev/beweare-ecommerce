@@ -23,7 +23,7 @@ const CancelPage = () => {
             src="/illustrationError.svg"
             width={300}
             height={300}
-            alt="sucess"
+            alt="Erro"
             className="mx-auto"
           />
           <DialogTitle className="mt-4 text-2xl">Pedido cancelado</DialogTitle>

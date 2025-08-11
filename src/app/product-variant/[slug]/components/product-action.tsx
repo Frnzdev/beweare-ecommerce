@@ -1,8 +1,5 @@
 "use client";
 
-import { MinusIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
-
 import { Button } from "@/components/ui/button";
 
 import AddToCartButton from "./add-to-cart-button";
@@ -12,15 +9,6 @@ interface ProductActionsProps {
 }
 
 const ProductActions = ({ productVariantId }: ProductActionsProps) => {
-  const handleIncrement = () => {
-    setQuantity((prev) => prev + 1);
-  };
-
-  const handleDecrement = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
-  };
-
-  const [quantity, setQuantity] = useState(1);
   return (
     <>
       <div className="px-5">

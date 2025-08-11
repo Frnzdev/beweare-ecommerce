@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -6,7 +5,6 @@ import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/db";
-import { shippingAddressTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 import CartSummary from "../components/cart-summary";
@@ -17,11 +15,9 @@ const ConfirmationPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
   if (!session?.user.id) {
     redirect("/");
   }
-
   const cart = await db.query.cartTable.findFirst({
     where: (cart, { eq }) => eq(cart.userId, session.user.id),
     with: {
@@ -37,24 +33,16 @@ const ConfirmationPage = async () => {
       },
     },
   });
-
   if (!cart || cart?.items.length === 0) {
     redirect("/");
   }
-
-  const shippingAddresses = await db.query.shippingAddressTable.findMany({
-    where: eq(shippingAddressTable.userId, session.user.id),
-  });
-
   const cartTotalInCents = cart.items.reduce(
     (acc, item) => acc + item.productVariant.priceInCents * item.quantity,
     0,
   );
-
   if (!cart.shippingAddress) {
-    redirect("/cart/indentification");
+    redirect("/cart/identification");
   }
-
   return (
     <div>
       <Header />
@@ -69,20 +57,15 @@ const ConfirmationPage = async () => {
                 <p className="text-sm">{formatAddress(cart.shippingAddress)}</p>
               </CardContent>
             </Card>
-
-            {/* Botão centralizado */}
-            <div className="flex justify-center">
-              <FinishOrderButton />
-            </div>
+            <FinishOrderButton />
           </CardContent>
         </Card>
-
         <CartSummary
-          totalInCents={cartTotalInCents}
           subtotalInCents={cartTotalInCents}
+          totalInCents={cartTotalInCents}
           products={cart.items.map((item) => ({
-            id: item.productVariantId,
-            name: item.productVariant.name,
+            id: item.productVariant.id,
+            name: item.productVariant.product.name,
             variantName: item.productVariant.name,
             quantity: item.quantity,
             priceInCents: item.productVariant.priceInCents,
