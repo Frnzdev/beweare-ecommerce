@@ -52,10 +52,14 @@ const Orders = ({ orders }: OrdersProps) => {
                     )}
                     <p>
                       Pedido feito em:{" "}
-                      {new Date(order.createdAt).toLocaleDateString("pt-BR")} às{" "}
+                      {new Date(order.createdAt).toLocaleDateString("pt-BR", {
+                        timeZone: "America/Sao_Paulo",
+                      })}{" "}
+                      às{" "}
                       {new Date(order.createdAt).toLocaleTimeString("pt-br", {
                         hour: "2-digit",
                         minute: "2-digit",
+                        timeZone: "America/Sao_Paulo",
                       })}
                     </p>
                   </div>
